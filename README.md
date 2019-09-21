@@ -3,7 +3,7 @@
 ## Django의 CBV(generic view)
 <br>
 
-####CBV의 기본 특징
+#### CBV의 기본 특징
 - render(requset, html파일, ctx) 함수를 기본으로 사용하는 FBV와 달리, 별도의 render 함수를 사용하지 않는다.
 - urls.py 파일의 path 함수에서 개별적인 함수(render함수 return)들을 url pattern과 매핑하는 대신, 각 generic view의 기본 메소드를(ex.as_view()) url pattern과 매핑한다.
     ```
@@ -11,7 +11,7 @@
     ```
 <br>
 
-####1. ListView
+#### 1. ListView
 ```
 class IndexView(generic.ListView):
 ```
@@ -23,7 +23,7 @@ class IndexView(generic.ListView):
     ```
 <br>
 
-####2. DetailView
+#### 2. DetailView
 ``` 
 class DetailView(generic.DetailView):
 ```
