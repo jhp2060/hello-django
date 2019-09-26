@@ -137,37 +137,37 @@ mysql> show tables;                  #helllo_django DB 내의 table 확인
         mysql>drop table polls_question  # hello_django에서 polls_question 테이블 제거
         ```   
     - table drop 후 새롭게 `python manage.py migrate polls` 실행하니 db 정상 작동 확인
-    ```
-    mysql>show tables;
-    +----------------------------+
-    | Tables_in_hello_django     |
-    +----------------------------+
-    | auth_group                 |
-    | auth_group_permissions     |
-    | auth_permission            |
-    | auth_user                  |
-    | auth_user_groups           |
-    | auth_user_user_permissions |
-    | django_admin_log           |
-    | django_content_type        |
-    | django_migrations          |
-    | django_session             |
-    | polls_choice               |
-    | polls_question             |
-    +----------------------------+
-    12 rows in set (0.00 sec)
-    
-    mysql> show full columns from polls_choice;
-    +-------------+--------------+--------------------+------+-----+---------+----------------+---------------------------------+---------+
-    | Field       | Type         | Collation          | Null | Key | Default | Extra          | Privileges                      | Comment |
-    +-------------+--------------+--------------------+------+-----+---------+----------------+---------------------------------+---------+
-    | id          | int(11)      | NULL               | NO   | PRI | NULL    | auto_increment | select,insert,update,references |         |
-    | choice_text | varchar(200) | utf8mb4_0900_ai_ci | NO   |     | NULL    |                | select,insert,update,references |         |
-    | votes       | int(11)      | NULL               | NO   |     | NULL    |                | select,insert,update,references |         |
-    | question_id | int(11)      | NULL               | NO   | MUL | NULL    |                | select,insert,update,references |         |
-    +-------------+--------------+--------------------+------+-----+---------+----------------+---------------------------------+---------+
-    4 rows in set (0.01 sec)
-    ```
+        ```
+        mysql>show tables;
+        +----------------------------+
+        | Tables_in_hello_django     |
+        +----------------------------+
+        | auth_group                 |
+        | auth_group_permissions     |
+        | auth_permission            |
+        | auth_user                  |
+        | auth_user_groups           |
+        | auth_user_user_permissions |
+        | django_admin_log           |
+        | django_content_type        |
+        | django_migrations          |
+        | django_session             |
+        | polls_choice               |
+        | polls_question             |
+        +----------------------------+
+        12 rows in set (0.00 sec)
+        
+        mysql> show full columns from polls_choice;
+        +-------------+--------------+--------------------+------+-----+---------+----------------+---------------------------------+---------+
+        | Field       | Type         | Collation          | Null | Key | Default | Extra          | Privileges                      | Comment |
+        +-------------+--------------+--------------------+------+-----+---------+----------------+---------------------------------+---------+
+        | id          | int(11)      | NULL               | NO   | PRI | NULL    | auto_increment | select,insert,update,references |         |
+        | choice_text | varchar(200) | utf8mb4_0900_ai_ci | NO   |     | NULL    |                | select,insert,update,references |         |
+        | votes       | int(11)      | NULL               | NO   |     | NULL    |                | select,insert,update,references |         |
+        | question_id | int(11)      | NULL               | NO   | MUL | NULL    |                | select,insert,update,references |         |
+        +-------------+--------------+--------------------+------+-----+---------+----------------+---------------------------------+---------+
+        4 rows in set (0.01 sec)
+        ```
     
 
 
