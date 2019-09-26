@@ -4,7 +4,7 @@
 ## Django의 CBV(generic view)
 <br>
 
-###CBV의 기본 특징
+### CBV의 기본 특징
 - render(requset, html파일, ctx) 함수를 기본으로 사용하는 FBV와 달리, 별도의 render 함수를 사용하지 않는다.
 - urls.py 파일의 path 함수에서 개별적인 함수(render함수 return)들을 url pattern과 매핑하는 대신, 각 generic view의 기본 메소드를(ex.as_view()) url pattern과 매핑한다.
     ```
@@ -12,7 +12,7 @@
     ```
 <br>
 
-###ListView
+### ListView
 ```
 class IndexView(generic.ListView):
 ```
@@ -24,7 +24,7 @@ class IndexView(generic.ListView):
     ```
 <br>
 
-###DetailView
+### DetailView
 ``` 
 class DetailView(generic.DetailView):
 ```
@@ -34,19 +34,19 @@ class DetailView(generic.DetailView):
 ***
 <br>
 
-##mysql DB 연동하기
+## mysql DB 연동하기
 
-###1. mysql 설치하기
+### 1. mysql 설치하기
 - https://www.edwith.org/boostcourse-web/lecture/16717/ 를 차근차근히 따라갈 것
 
-###2. package 설치하기
+### 2. package 설치하기
 ```
 >pip install mysqlclient
 ```
 - 만약 설치 안될 경우, 별도의 파일(ex. mysqlclient-1.4.4-cp37-cp37m-win32.whl)을 직접 다운받아서 프로젝트 디렉토리 내에 넣어서 `pip install mysqlclient-1.4.4-cp37-cp37m-win32.whl` 명령어 실행
 - 그래도 안된다면... ~~알아서해라~~
 
-###3. settings.py 수정하기
+### 3. settings.py 수정하기
 ```
 DATABASES = {
     'default': {
@@ -60,7 +60,7 @@ DATABASES = {
 }
 ```
 
-###4. terminal에서 mysql 명령어 통해 확인하기
+### 4. terminal에서 mysql 명령어 통해 확인하기
 ```
 > mysql -u 유저이름 -p패스워드          #terminal에서 mysql 실행
 ```
@@ -181,7 +181,7 @@ mysql> show tables;                  #helllo_django DB 내의 table 확인
 - ~~테스트 주도 개발...?~~
 - test.py의 코드가 방대해진다고 해서 걱정하지 말아라. 버그를 확인하고 사전에 예방하는 건 좋은거다.
 
-###test.py
+### test.py
 - django app 생성 시 app마다 기본적으로 가지고 있는 python 파일
 - `test.py`내에 `from django.test import TestCase`를 통해 import 한 TestCase 클래스를 상속받아 새로운 testcase 클래스를 만들고, 그 안에 test를 위한 메소드 구현  
 - `py manage.py test app명`의 명령어로 test.py 실행
