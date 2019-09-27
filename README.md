@@ -201,4 +201,116 @@ mysql> show tables;                  #helllo_django DB 내의 table 확인
 >py manag.py runserver      #동일한 효과
 ```
 
+<br><br><br>
+***
+<br>
 
+## STATIC 파일 사용하기
+- css, gif, png 등 정적파일을 django 내에서 사용하기 위해 장고앱마다 `static`이라는 하위 디렉토리를 만들어 그 디렉토리에 저장해야 한다.
+    ```
+    mysite
+        \mysite
+        \polls
+            \migrations
+            \templates
+            \static
+                \polls
+                    \css
+                        \style.css
+                    \images
+                        \background.png
+            \__init__.py
+            \admin.py
+            ... 
+    ``` 
+- template(html 파일) 내에 static file들을 불러오기 위한 코드를 삽입해야 한다.
+    ```
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+    ```
+    
+<br><br><br>
+***
+<br>
+
+## django admin page 커스터마이징
+
+- django tutorial part 7 (https://docs.djangoproject.com/ko/2.2/intro/tutorial07/)
+
+### 모델 내 필드에 대한 관리 
+- `admin.py` 코드 수정을 통한 관리자 옵션 변경은 `ModelAdmin class 생성 -> admin.site.register()의 두번째 인자로 클래스 전달`의 패턴을 따른다.
+    ```
+    from django.contrib import admin
+    
+    from .models import Question
+    
+    
+    class QuestionAdmin(admin.ModelAdmin):
+        fieldsets = [
+            (None,               {'fields': ['question_text']}),
+            ('Date information', {'fields': ['pub_date']}),
+        ]
+    
+    admin.site.register(Question, QuestionAdmin)    
+    ```
+- 위 코드를 통해 아래 스크린샷과 같은 admin page를 만들 수 있다.
+    ![admin08](./polls/static/polls/images/admin08.png)
+- `admin.ModelAdmin` 클래스에서 `fields` 속성을 사용하면, 단순히 여러 필드를 나열하게 되고, `fieldsets` 속성을 사용하면, 몇개의 필드들을 하나로 묶어 필드셋으로 사용 가능하다. 이 경우, 각 필드셋에 대한 명명도 가능하다.
+ 
+    
+### 연결된 다른 모델(Foreign Key)에 대한 관리
+- `ModelAdmin` 클래스 내의 `inlines` 속성에 새로운 `Inline` 클래스들을 리스트 형태로 대입하면 일대다 관계로 연결된 객체들도 함께 관리할 수 있다.
+    ```
+    from django.contrib import admin
+    
+    from .models import Choice, Question
+    
+    
+    class ChoiceInline(admin.TabularInline):
+        #현재 Question 인스턴스와 연결된 Choice 모델의 인스턴스를 가져옴
+        model = Choice
+        extra = 3       #추가적으로 3개를 넣을 수 있도록 보여줌
+    
+    
+    class QuestionAdmin(admin.ModelAdmin):
+        fieldsets = [
+            (None,               {'fields': ['question_text']}),
+            ('Date information', {'fields': ['pub_date'], 'classes': ['collapse']}),
+        ]
+        inlines = [ChoiceInline]
+    
+    admin.site.register(Question, QuestionAdmin)
+    ```
+   
+### change list 관리
+- `ModelAdmin` 클래스의 `list_display` 속성에 `tuple` 형태로 어드민 페이지의 인스턴스 리스트(change list)의 column값들을 입력해준다
+    ```
+    list_display = ('question_text', 'pub_date', 'was_published_recently')
+    ``` 
+
+### admin page template 관리
+- `settings.py`의 `TEMPLATES`에서 `DIRS` 리스트 내에 `os.path.join(BASE_DIR, 'templates')`를 넣어주고, 프로젝트 디렉토리 내에 새로운 `templates` 디렉토리를 만들어준다.
+    ```
+    TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+    ```
+- shell에서 `py -c "import django`, `print(django.__path__)"`의 명령어를 통해 개발 환경 내에 django가 설치된 위치를 파악한다.
+- 파악한 위치를 통해 `django/contrib/admin/templates`에 있는 `admin/base_site.html` 파일을 찾아 프로젝트 내 `templates/admin`에 복사한 뒤, 해당 html을 수정해 커스터마이징 한다.
+    
+    
+    
+    
